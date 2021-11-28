@@ -1,5 +1,6 @@
 package com.mwss.mytravelexpenses.controller
 
+import org.hamcrest.CoreMatchers.containsString
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
@@ -9,16 +10,17 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
-@WebMvcTest
-internal class AuthControllerTest {
+@WebMvcTest(MvcControllerTest::class)
+internal class MvcControllerTestTest {
 
     @Autowired
     lateinit var mockMvc: MockMvc
 
     @Test
-    fun getTest() {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/mtex/v1/auth/"))
+    fun mvcTestMapping() {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/test/"))
             .andExpect(MockMvcResultMatchers.status().isOk)
-            .andExpect(MockMvcResultMatchers.content().string("test"))
+            .andExpect(MockMvcResultMatchers.view().name("index"))
+            .andExpect(MockMvcResultMatchers.content().string(containsString("Hello World!")))
     }
 }

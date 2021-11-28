@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/mtex/v1")
 class MainController (
-    val bankRepo: BankAccountRepository,
-    val claimRepo: ClaimRepository,
-    val routeRepo: RouteRepository,
-    val tripRepo: TripRepository,
-    val userRepo: UserRepository
+//    val bankRepo: BankAccountRepository,
+//    val claimRepo: ClaimRepository,
+//    val routeRepo: RouteRepository,
+//    val tripRepo: TripRepository,
+//    val userRepo: UserRepository
         ){
 
     @GetMapping("/")
