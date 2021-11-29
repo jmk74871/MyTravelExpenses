@@ -13,11 +13,92 @@
 </head>
 
 <body>
-<div class="page-header">
-    <h1 th:text="${title}">Hello World!</h1>
-</div>
 
-<!--ToDo: build a signup form-->
+<div class="container-fluid">
+
+    <div class="row align-items-center">
+        <div class="col-sm-3">
+
+        </div>
+        <div class="col-sm-6">
+            <div class="page-header">
+                <h1 th:text="${title}">Hello World!</h1>
+            </div>
+        </div>
+        <div class="col-sm-3">
+
+        </div>
+    </div>
+
+    <div class="row align-items-center">
+
+        <div class="col-sm-3">
+
+        </div>
+
+        <div class="col-sm-6">
+            <h3>Sign up to start tracking your business trips and generate claims for your expenses!</h3>
+        </div>
+
+        <div class="col-sm-3">
+            <p>All ready got an account?</p>
+            <button type="button" class="btn btn-secondary">Log in</button>
+        </div>
+    </div>
+
+    <div class="row align-items-center">
+
+        <div class="col-sm-3">
+
+        </div>
+
+        <div class="col-sm-6">
+            <form>
+                <div class="form-group">
+                    <label for="inputUserName">User Name</label>
+                    <input type="text" class="form-control" id="inputUserName" placeholder="User Name">
+                </div>
+                <div class="form-group">
+                    <label for="inputFirstName">First Name</label>
+                    <input type="text" class="form-control" id="inputFirstName" placeholder="First Name">
+                </div>
+                <div class="form-group">
+                    <label for="inputLastName">Last Name</label>
+                    <input type="text" class="form-control" id="inputLastName" placeholder="Last Name">
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress">Address</label>
+                    <input type="text" class="form-control" id="inputAddress" placeholder="Address">
+                </div>
+                <div class="form-group">
+                    <label for="inputPostcode">Postcode</label>
+                    <input type="text" class="form-control" id="inputPostalcode" placeholder="Postcode">
+                </div>
+                <div class="form-group">
+                    <label for="inputCity">City</label>
+                    <input type="text" class="form-control" id="inputCity" placeholder="City">
+               </div>
+                <div class="form-group">
+                    <label for="inputPassword">Password</label>
+                    <input type="Password" class="form-control" id="inputPassword" aria-describedby="PasswordHelp" placeholder="Password">
+                    <small id="PasswordHelp" class="form-text text-muted">Passwords need to be at least 8 charaters long and contain at least one capital letter (A-Z) one lowercase letter (a-z) and one numerical letter (0-9)</small>
+                </div>
+                <div class="form-group">
+                    <label for="inputPasswordRepeat">Repeat Password</label>
+                    <input type="Password" class="form-control" id="inputPasswordRepeat" placeholder="Repeat Password">
+                </div>
+
+                <button type="submit" class="btn btn-success btn-lg btn-block">Sign up!</button>
+            </form>
+        </div>
+
+        <div class="col-sm-3">
+
+        </div>
+
+    </div>
+
+</div>
 
 </body>
 </html>
