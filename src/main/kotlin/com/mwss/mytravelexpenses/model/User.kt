@@ -27,6 +27,9 @@ open class User {
     @Column(name = "CITY", nullable = false)
     open var city: String? = null
 
+    @Column(name="PASSWORD", nullable=false)
+    open var password: String? = null
+
     @OneToMany(cascade = [CascadeType.REMOVE], orphanRemoval = true)
     @JoinColumn(name = "USER_ID")
     open var trips: MutableList<Trip> = mutableListOf()

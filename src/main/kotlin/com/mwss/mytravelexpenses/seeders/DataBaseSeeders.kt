@@ -13,17 +13,17 @@ class DataBaseSeeders (
 
     @EventListener
     fun dataSeeder(event: ContextRefreshedEvent){
-        seedUserTabele()
+        seedUserTable()
     }
 
-    fun seedUserTabele(){
+    fun seedUserTable(){
         // add check and only add initial admin if needed
         val userData = listOf(
-            listOf("jmkdev001", "Kuhlo", "Jonas", "Hauptstraße 23",  "72762", "Reutlingen"),
-            listOf("jmkdev002", "Kuhlo", "Max", "Hauptstraße 23",  "72762", "Reutlingen"),
-            listOf("jmkdev003", "Mkhayan", "Yulia", "Hauptstraße 23",  "72762", "Reutlingen")
+            listOf("jmkdev001", "Kuhlo", "Jonas", "Hauptstraße 23",  "72762", "Reutlingen", "pass234"),
+            listOf("jmkdev002", "Kuhlo", "Max", "Hauptstraße 23",  "72762", "Reutlingen", "pass234"),
+            listOf("jmkdev003", "Mkhayan", "Yulia", "Hauptstraße 23",  "72762", "Reutlingen", "pass234")
         )
-        for(dataSet in userData){
+        for(dataSet: List<String> in userData){
             val user = User()
             user.userName = dataSet[0]
             user.lastName = dataSet[1]
@@ -31,6 +31,7 @@ class DataBaseSeeders (
             user.address = dataSet[3]
             user.plz = dataSet[4]
             user.city = dataSet[5]
+            user.password = dataSet[6]
             this.userRepo.save(user)
         }
     }
