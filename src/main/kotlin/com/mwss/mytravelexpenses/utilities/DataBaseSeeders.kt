@@ -1,4 +1,4 @@
-package com.mwss.mytravelexpenses.seeders
+package com.mwss.mytravelexpenses.utilities
 
 import com.mwss.mytravelexpenses.model.User
 import com.mwss.mytravelexpenses.service.UserRepository
@@ -34,5 +34,9 @@ class DataBaseSeeders (
             user.password = dataSet[6]
             this.userRepo.save(user)
         }
+    }
+
+    fun seedClaimsTable(){
+
     }
 }
