@@ -1,5 +1,6 @@
 package com.mwss.mytravelexpenses.model
 
+import org.hibernate.Hibernate
 import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.persistence.*
@@ -18,9 +19,12 @@ open class Trip {
     @Column(name = "END_DATE_TIME", nullable = false)
     open var endDateTime: LocalDateTime? = null
 
-    @OneToMany(cascade = [CascadeType.PERSIST])
-    @JoinColumn(name = "TRIP_ID")
+    @ManyToMany(cascade = [CascadeType.PERSIST])
+    @JoinTable(name = "trip_routes",
+        joinColumns = [JoinColumn(name = "trip_id")],
+        inverseJoinColumns = [JoinColumn(name = "routes_id")])
     open var routes: MutableList<Route> = mutableListOf()
 
-    fun getTotalTripDistanceInKm(): Int = routes.map { it.distanceInKm }.foldRight(0) { sum, next -> sum + next}
+    fun getTotalTripDistanceInKm(): Double = routes.map { it.distanceInKm }.foldRight(0.0) { sum, next -> sum + next}
+
 }

@@ -1,7 +1,7 @@
 package com.mwss.mytravelexpenses.controllerMVC
 
-import com.mwss.mytravelexpenses.AlertObj
 import com.mwss.mytravelexpenses.utilities.AuthUtility
+import com.mwss.mytravelexpenses.utilities.MessagingUtility
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.CookieValue
@@ -11,11 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping
 
 @Controller
 @RequestMapping("/myaccount")
-class myAccountController (
-    val authUtility: AuthUtility
+class MyAccountController (
+    val authUtility: AuthUtility,
+    val messagingUtility: MessagingUtility
         ) {
-
-    val noAlert = AlertObj(false, "")
 
     @GetMapping("/")
     fun getAccountDetails(model: Model, @CookieValue(value = "token", defaultValue = "") tokenUuidString: String): String{
@@ -23,9 +22,10 @@ class myAccountController (
 
         model.addAttribute("user", user)
         model.addAttribute("title", "My Account Details")
-        model.addAttribute("alert", noAlert)
+        model.addAttribute("alert", messagingUtility.noAlert)
 
         return "myAccount"
-
     }
+
+    // ToDo: add endpoint to receive updates to the account details
 }

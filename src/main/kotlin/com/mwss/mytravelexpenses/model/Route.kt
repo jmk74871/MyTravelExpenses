@@ -17,6 +17,6 @@ open class Route {
     open var endLocation: String? = null
 
     @Column(name = "DISTANCE_IN_KM", nullable = false)
-    open var distanceInKm: Int = 0
+    open var distanceInKm: Double = 0.0
 
 }

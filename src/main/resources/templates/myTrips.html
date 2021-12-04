@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/general.html :: head"></head>
+
+<body>
+
+<!-- Modal to add routes -->
+<div class="modal fade" id="addRouteModal" tabindex="-1" aria-labelledby="addRouteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addRouteModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                test text
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+
+    <div th:replace="fragments/general.html :: titleRow"></div>
+
+    <div class="row align-items-center">
+
+        <div class="col-sm-3">
+
+        </div>
+
+        <div class="col-sm-6">
+            <h3>View and update your account details</h3>
+            <div th:if="${alert.show}" class="alert alert-warning" role="alert" th:text="${alert.text}">
+                This is a success alert—check it out!
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <button type="button" class="btn btn btn-outline-primary btn-lg" onclick="window.location.href='/dashboard/';">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-view-stacked" viewBox="0 0 16 16">
+                    <path d="M3 0h10a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3zm0 8h10a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1H3z"/>
+                </svg>
+                My dashboard
+            </button>
+        </div>
+    </div>
+
+    <div class="row align-items-center">
+
+        <div class="col-sm-3">
+
+            <a href="/myroutes/"><h3>My routes</h3></a>
+
+            <hr>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                    <button class="btn btn-outline-primary float-end" type="button" data-bs-toggle="collapse" data-bs-target="#addRouteForm" aria-expanded="false" aria-controls="addRouteForm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                        </svg>
+                    </button>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="collapse" id="addRouteForm">
+
+                        <form method="post" th:action="@{/mytrips/add-route}" th:object="${route}">
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="startLocation">start</span>
+                                <input type="text" class="form-control" placeholder="location of the route"
+                                       aria-label="startLocation" aria-describedby="startLocation" name="startLocation">
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="endLocation">end</span>
+                                <input type="text" class="form-control" placeholder="location of the route"
+                                       aria-label="endLocation" aria-describedby="endLocation" name="endLocation">
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Distance</span>
+                                <input type="number" class="form-control" aria-label="Distance of the route in km" name="distanceInKm" step="1" onchange="this.value = parseInt(this.value);">
+                                <span class="input-group-text" id="distanceInKm">km</span>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary">Add</button>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" th:each="route: ${user.routes}">
+                <div class="card-body">
+                    <span th:text="${route.startLocation}"></span>
+                    <span> to </span>
+                    <span th:text="${route.endLocation}"></span>
+
+                    <span class="badge rounded-pill bg-info text-dark" th:text="${route.distanceInKm}">
+                        Info
+                    </span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-sm-6">
+
+            <h3>Your latest business trips</h3>
+            <hr>
+
+            <div class="card">
+                <div class="card-body">
+<!--                  Todo:  put colapse button here-->
+                </div>
+
+                <div class="card-footer">
+<!--                  Todo:  put form to add tripp here-->
+                </div>
+            </div>
+
+            <div class="card" th:each="trip: ${user.trips}">
+                <div class="card-body" th:text="Fahrt Nr. ${trip.id}">
+                    This is some text within a card body.
+                </div>
+            </div>
+
+        </div>
+
+            <div class="col-sm-3">
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+<!--bootstrap and popper scripts-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+</body>
+</html>

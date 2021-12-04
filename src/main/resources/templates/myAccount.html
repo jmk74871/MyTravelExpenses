@@ -1,16 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Die 3 Meta-Tags oben *müssen* zuerst im head stehen; jeglicher sonstiger head-Inhalt muss *nach* diesen Tags kommen -->
-
-    <title>MyTravelExpenses</title>
-
-    <!-- Das neueste kompilierte und minimierte CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-</head>
+<head th:replace="fragments/general.html :: head"></head>
 
 <body>
 
@@ -37,15 +27,19 @@
         </div>
 
         <div class="col-sm-6">
-            <h3>Log in to add your newest business trips or generate claims for your expenses!</h3>
+            <h3>View and update your account details</h3>
             <div th:if="${alert.show}" class="alert alert-warning" role="alert" th:text="${alert.text}">
                 This is a success alert—check it out!
             </div>
         </div>
 
         <div class="col-sm-3">
-            <p>No account jet?</p>
-            <button type="button" class="btn btn-secondary" onclick="window.location.href='/signup/';">Sign Up</button>
+            <button type="button" class="btn btn btn-outline-primary btn-lg" onclick="window.location.href='/dashboard/';">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-view-stacked" viewBox="0 0 16 16">
+                    <path d="M3 0h10a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3zm0 8h10a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1H3z"/>
+                </svg>
+                My dashboard
+            </button>
         </div>
     </div>
 
