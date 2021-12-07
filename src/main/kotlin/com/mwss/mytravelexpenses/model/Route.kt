@@ -19,4 +19,8 @@ open class Route {
     @Column(name = "DISTANCE_IN_KM", nullable = false)
     open var distanceInKm: Double = 0.0
 
+    fun decriptionString()
+    : String {
+        return "${startLocation} to ${endLocation}"
+    }
 }

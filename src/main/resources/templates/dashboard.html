@@ -53,8 +53,8 @@
 
             <h3>Yor latest claims</h3>
 
-            <div class="card" th:each="claim: ${claims}">
-                <div class="card-body" th:text="Claim Nr. ${claim.id}">
+            <div class="card" th:each="claim: ${user.claims}">
+                <div class="card-body" th:text="${claim.id}">
                     This is some text within a card body.
                 </div>
             </div>
@@ -82,9 +82,9 @@
 
             <h3>Your latest business trips </h3>
 
-            <div class="card" th:each="trip: ${trips}">
-                <div class="card-body" th:text="Fahrt Nr. ${trip.id}">
-                    This is some text within a card body.
+            <div class="card" th:each="trip: ${user.trips}">
+                <div class="card-body">
+                    <span th:text="${trip.startDateTime}"></span>
                 </div>
             </div>
         </div>

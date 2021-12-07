@@ -27,4 +27,8 @@ open class Trip {
 
     fun getTotalTripDistanceInKm(): Double = routes.map { it.distanceInKm }.foldRight(0.0) { sum, next -> sum + next}
 
+//    fun getStartDateTimeAsLocalDateTime(): LocalDateTime = LocalDateTime.parse(startDateTime)
+//
+//    fun getEndDateTimeAsLocalDateTime(): LocalDateTime = LocalDateTime.parse(endDateTime)
+
 }
