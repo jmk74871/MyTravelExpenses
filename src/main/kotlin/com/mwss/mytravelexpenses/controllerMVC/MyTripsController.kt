@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.ui.set
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDateTime
 
 @Controller
 @RequestMapping("/mytrips")
@@ -58,8 +59,30 @@ class MyTripsController (
         return "myTrips"
     }
 
-    @PostMapping("/add-trip-to-route")
-    fun addTripToRoute(
+    @PostMapping("/add-trip")
+    fun addTrip(
+        model: Model,
+        @CookieValue(value = "token", defaultValue = "") tokenUuidString: String,
+        @RequestParam("startDate") startDateString: String,
+        @RequestParam("endDate") endDateString: String
+    ):String{
+        val user = this.authUtility.validateToken(tokenUuidString)
+
+        val newTrip = Trip()
+
+        newTrip.startDateTime = LocalDateTime.parse(startDateString)
+        newTrip.endDateTime = LocalDateTime.parse(startDateString)
+
+        user.trips.add(this.tripRepository.save(newTrip))
+        this.userRepository.save(user)
+
+        buildModel(user, model, messagingUtility.noAlert)
+
+        return "myTrips"
+    }
+
+    @PostMapping("/add-route-to-trip")
+    fun addRouteToTrip(
         model: Model,
         @CookieValue(value = "token", defaultValue = "") tokenUuidString: String,
         @RequestParam("routeId") routeId: String,

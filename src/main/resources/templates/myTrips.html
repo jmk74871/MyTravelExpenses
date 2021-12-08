@@ -50,7 +50,7 @@
         </div>
     </div>
 
-    <div class="row align-items-center">
+    <div class="row align-items-start">
 
         <div class="col-sm-3">
 
@@ -74,13 +74,13 @@
                         <form method="post" th:action="@{/mytrips/add-route}" th:object="${route}">
 
                             <div class="input-group mb-3">
-                                <span class="input-group-text" id="startLocation">start</span>
+                                <span class="input-group-text" id="startLocation">Start</span>
                                 <input type="text" class="form-control" placeholder="location of the route"
                                        aria-label="startLocation" aria-describedby="startLocation" name="startLocation">
                             </div>
 
                             <div class="input-group mb-3">
-                                <span class="input-group-text" id="endLocation">end</span>
+                                <span class="input-group-text" id="endLocation">End</span>
                                 <input type="text" class="form-control" placeholder="location of the route"
                                        aria-label="endLocation" aria-describedby="endLocation" name="endLocation">
                             </div>
@@ -131,17 +131,23 @@
 
                         <p>ToDo: Build form to add trips here!!!</p>
 
-                        <form th:action="@{/mytrips/add-trip-to-route}" method="post">
+                        <form th:action="@{/mytrips/add-trip}" method="post">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="startDateTime-addon1">Start</span>
+                                </div>
+                                <input type="datetime-local" class="form-control" placeholder="Date & Time of your trip"
+                                       aria-label="startDateTime" aria-describedby="startDateTime-addon1" name="startDate">
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="endDateTime-addon1">End</span>
+                                </div>
+                                <input type="datetime-local" class="form-control" placeholder="Date & Time of your trip"
+                                       aria-label="endDateTime" aria-describedby="endDateTime-addon1" name="endDate">
+                            </div>
 
-                            <select class="form-select" aria-label="Default select example" name="routeId">
-                                <option selected>Open this select menu</option>
-                                <option th:each="route: ${user.routes}"
-                                        th:value="${route.id}"
-                                        th:text="${route.decriptionString()}">One
-                                </option>
-                            </select>
-
-                            <button type="submit" >Add</button>
+                            <button class="btn btn-secondary btn-block" type="submit" >Add</button>
                         </form>
                     </div>
                 </div>
@@ -156,9 +162,15 @@
             </div>
 
             <div class="card" th:each="trip: ${user.trips}">
-                <div class="card-body">
+                <div class="card-header">
                     <span th:text="${trip.startDateTime}"></span>
+                    <!-- ToDo: add edit button (with modal to edit?)-->
+                    <!-- ToDo: add delete button (with modal to confirm?) -->
+
+                </div>
+                <div class="card-body">
                     <span th:each="route: ${trip.routes}" th:text="${route.decriptionString()}"></span>
+                    <!-- ToDo: add dropdown/select to add routes to this trip -->
                 </div>
             </div>
 
