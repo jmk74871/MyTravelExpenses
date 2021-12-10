@@ -1,5 +1,6 @@
 package com.mwss.mytravelexpenses.model
 
+import java.util.*
 import javax.persistence.*
 
 @Entity(name = "USER")
@@ -30,6 +31,7 @@ open class User {
     @Column(name="PASSWORD", nullable=false)
     open var password: String? = null
 
+    @OrderBy("startDateTime DESC")
     @OneToMany(cascade = [CascadeType.REMOVE], orphanRemoval = true)
     @JoinColumn(name = "USER_ID")
     open var trips: MutableList<Trip> = mutableListOf()
@@ -46,4 +48,20 @@ open class User {
         orphanRemoval = true)
     @JoinColumn(name = "USER_ID")
     open var bankAccounts: MutableList<BankAccount> = mutableListOf()
+
+    fun findTripById(tripId: Long):Trip? {
+        for (trip in trips){
+            if (tripId == trip.id) return trip
+        }
+        return null
+    }
+
+    fun findRouteById(routeId: Long):Route? {
+        for (route in routes){
+            if (routeId == route.id) return route
+        }
+        return null
+    }
+
+
 }

@@ -14,6 +14,7 @@ import org.springframework.ui.Model
 import org.springframework.ui.set
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
+import java.util.*
 
 @Controller
 @RequestMapping("/mytrips")
@@ -71,9 +72,9 @@ class MyTripsController (
         val newTrip = Trip()
 
         newTrip.startDateTime = LocalDateTime.parse(startDateString)
-        newTrip.endDateTime = LocalDateTime.parse(startDateString)
+        newTrip.endDateTime = LocalDateTime.parse(endDateString)
 
-        user.trips.add(this.tripRepository.save(newTrip))
+        user.trips.add(0, this.tripRepository.save(newTrip))
         this.userRepository.save(user)
 
         buildModel(user, model, messagingUtility.noAlert)
@@ -86,20 +87,35 @@ class MyTripsController (
         model: Model,
         @CookieValue(value = "token", defaultValue = "") tokenUuidString: String,
         @RequestParam("routeId") routeId: String,
-        @ModelAttribute newTrip: Trip
+        @RequestParam("tripId") tripId: String
     ): String {
         val user = this.authUtility.validateToken(tokenUuidString)
 
-        if( routeId.all { it in '0'..'9' }){
-            val routeOptional = this.routeRepository.findById(routeId.toLong())
-            if(routeOptional.isPresent) newTrip.routes.add(routeOptional.get())
+        // check input
+        if(!(tripId.all { it in '0'..'9' } && routeId.all { it in '0'..'9' })){
+            buildModel(user, model, messagingUtility.faultyInput)
+            return "myTrips"
         }
 
+        //get trip from id
+        val trip: Trip = user.findTripById(tripId.toLong()) ?: run{
+            buildModel(user, model, messagingUtility.objNotFound)
+            return "myTrips" }
 
+        //get route from id
+        val route = user.findRouteById(routeId.toLong()) ?: run{
+            buildModel(user, model, messagingUtility.objNotFound)
+            return "myTrips" }
+
+        // add route and save trip
+        trip.routes.add(route)
+        this.tripRepository.save(trip)
+        // this.userRepository.save(user)
+
+        //build model and return
         buildModel(user, model, messagingUtility.noAlert)
-        model["trip"] = newTrip
-
         return "myTrips"
+
     }
 
     fun buildModel(user: User, model: Model, alert: AlertObj): Model {
