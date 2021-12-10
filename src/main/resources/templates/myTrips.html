@@ -152,7 +152,7 @@
 
             </div>
 
-            <div class="card" th:each="trip: ${user.trips}">
+            <div class="card" th:each="trip, tripIndex: ${user.trips}">
                 <div class="card-header">
                     <div class="d-grid gap-2">
                         <button class="btn btn-primary float-end"
@@ -166,17 +166,49 @@
                     <!-- ToDo: add delete button (with modal to confirm?) -->
 
                 </div>
+
                 <div class="card-body">
-                    <div class="collapse" th:id="'trip' + ${trip.id}">
+
+                    <div th:id="'trip' + ${trip.id}" th:attr="class=${tripIndex.first ? 'collapse show' : 'collapse'}">
+
                         <p th:text="'Start:' + ${trip.startDateTime}"></p>
                         <p th:text="'End:' + ${trip.endDateTime}"></p>
-                        <p th:each="route: ${trip.routes}" th:text="${route.decriptionString()}"></p>
+                        <hr>
+                        <p>Routes</p>
+
+                        <div th:each="route, iStat: ${trip.routes}">
+                            <form th:action="@{/mytrips/remove-route}" method="post">
+
+                                <input type="number" name="tripId" th:value="${trip.id}" hidden>
+                                <input type="number" name="routeId" th:value="${route.id}" hidden>
+
+                                <div class="input-group mb-3">
+
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" th:text="'Route ' + ${iStat.index + 1} + ': '"></span>
+                                    </div>
+
+                                    <input type="text" th:value="${route.decriptionString()}" readonly class="form-control">
+
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-light" type="submit">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"/>
+                                                <path fill-rule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+
                         <form th:action="@{/mytrips/add-route-to-trip}" method="post">
                             <!-- ToDo: add dropdown/select to add routes to this trip -->
                             <input type="text" th:value="${trip.id}" name="tripId" hidden>
                             <div class="input-group mb-6">
                                 <span class="input-group-text" id="basic-addon1">Route: </span>
-                                <select class="custom-select" id="inputGroupSelect" name="routeId">
+                                <select class="custom-select form-control" id="inputGroupSelect" name="routeId">
                                     <option selected>Choose a route to add to this trip!</option>
                                     <option th:each="route: ${user.routes}"
                                             th:value="${route.id}"

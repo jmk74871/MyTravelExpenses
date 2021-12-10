@@ -14,7 +14,6 @@ import org.springframework.ui.Model
 import org.springframework.ui.set
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
-import java.util.*
 
 @Controller
 @RequestMapping("/mytrips")
@@ -117,6 +116,8 @@ class MyTripsController (
         return "myTrips"
 
     }
+
+    // ToDo: add remove route endpoint
 
     fun buildModel(user: User, model: Model, alert: AlertObj): Model {
         model["user"]=user
