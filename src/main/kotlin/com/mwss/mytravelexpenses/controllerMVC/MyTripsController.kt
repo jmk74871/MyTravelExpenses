@@ -117,7 +117,13 @@ class MyTripsController (
 
     }
 
-    // ToDo: add remove route endpoint
+    // ToDo: add POST /remove-route
+
+    // ToDo: add POST /update-startDate
+
+    // ToDo: add POST /update-endDate
+
+    // ToDo: add POST /delete-trip
 
     fun buildModel(user: User, model: Model, alert: AlertObj): Model {
         model["user"]=user

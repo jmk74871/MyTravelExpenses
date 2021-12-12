@@ -154,16 +154,35 @@
 
             <div class="card" th:each="trip, tripIndex: ${user.trips}">
                 <div class="card-header">
-                    <div class="d-grid gap-2">
-                        <button class="btn btn-primary float-end"
-                                type="button"
-                                data-bs-toggle="collapse"
-                                th:attr="data-bs-target='#trip' + ${trip.id}, aria-controls='trip' + ${trip.id}"
-                                aria-expanded="false"
-                                th:text="${trip.getDescriptionString()}"></button>
+
+                    <div class="row">
+                        <div class="col-sm-11">
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-primary float-end"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        th:attr="data-bs-target='#trip' + ${trip.id}, aria-controls='trip' + ${trip.id}"
+                                        aria-expanded="false"
+                                        th:text="${trip.getDescriptionString()}"></button>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-1">
+                            <div class="d-grid gap-2">
+                                <form th:action="@{/mytrips/delete-trip}">
+                                    <input type="number" name="tripId" th:value="${trip.id}" hidden>
+                                    <button type="button" class="btn btn-outline-light">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"/>
+                                            <path fill-rule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"/>
+                                        </svg>
+                                    </button>
+                                </form>
+                            </div>
+
+                        </div>
+
                     </div>
-                    <!-- ToDo: add edit button (with modal to edit?)-->
-                    <!-- ToDo: add delete button (with modal to confirm?) -->
 
                 </div>
 
@@ -171,9 +190,34 @@
 
                     <div th:id="'trip' + ${trip.id}" th:attr="class=${tripIndex.first ? 'collapse show' : 'collapse'}">
 
-                        <p th:text="'Start:' + ${trip.startDateTime}"></p>
-                        <p th:text="'End:' + ${trip.endDateTime}"></p>
+                        <form th:action="@{/mytrips/update-startDate}" method="post">
+                            <input type="number" name="tripId" th:value="${trip.id}" hidden>
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Start </span>
+                                <input type="datetime-local" class="form-control" th:value="${trip.startDateTime}"
+                                       aria-label="startDateTime" aria-describedby="startDateTime">
+                                <button class="btn btn-outline-secondary" type="submit" id="button-edit-startDateTime">
+                                    save
+                                </button>
+                            </div>
+                        </form>
+
+                        <form th:action="@{/mytrips/update-endDate}" method="post">
+                            <input type="number" name="tripId" th:value="${trip.id}" hidden>
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">End </span>
+                                <input type="datetime-local" class="form-control" th:value="${trip.endDateTime}"
+                                       aria-label="endDateTime" aria-describedby="endDateTime">
+                                <button class="btn btn-outline-secondary" type="submit" id="button-edit-endDateTime">
+                                    save
+                                </button>
+                            </div>
+                        </form>
+
                         <hr>
+
                         <p>Routes</p>
 
                         <div th:each="route, iStat: ${trip.routes}">
@@ -204,7 +248,8 @@
                         </div>
 
                         <form th:action="@{/mytrips/add-route-to-trip}" method="post">
-                            <!-- ToDo: add dropdown/select to add routes to this trip -->
+
+                            <!-- dropdown/select to add routes to this trip -->
                             <input type="text" th:value="${trip.id}" name="tripId" hidden>
                             <div class="input-group mb-6">
                                 <span class="input-group-text" id="basic-addon1">Route: </span>
